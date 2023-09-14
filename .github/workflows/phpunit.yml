@@ -22,7 +22,7 @@ jobs:
         XDEBUG_MODE: coverage
       with:
         version: 9.6.11
-        memory_limit: 256M
+        memory_limit: 4G
         configuration: "./phpunit.xml"
         php_extensions: "gd xdebug"
         coverage_cobertura: "./coverage.cobertura.xml"
