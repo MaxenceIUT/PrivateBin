@@ -3,7 +3,7 @@ name: CI
 on: [push]
 
 jobs:
-  build-test:
+  run-tests:
     runs-on: ubuntu-latest
 
     steps:
@@ -18,7 +18,7 @@ jobs:
       with:
         version: 9.6.11
         configuration: "./phpunit.xml"
-        php_extensions: "gd"
+        php_extensions: "gd xdebug"
         coverage_cobertura: "./coverage.cobertura.xml"
 
     - name: List files
