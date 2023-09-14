@@ -14,3 +14,14 @@ jobs:
       with:
         configuration: "./phpunit.xml"
         php_extensions: "gd"
+        coverage_cobertura: "coverage.cobertura.xml"
+
+    - name: Code Coverage Report
+      uses: irongut/CodeCoverageSummary@v1.3.0
+      with:
+        filename: "coverage.cobertura.xml"
+        badge: true
+        fail_below_min: true
+        format: markdown
+        hide_complexity: true
+        thresholds: "50 75"
