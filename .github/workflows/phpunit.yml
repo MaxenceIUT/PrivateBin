@@ -1,6 +1,6 @@
 name: CI
 
-on: 
+on:
   push:
     branches:
       - main
@@ -10,49 +10,49 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Cloning repository
-      uses: actions/checkout@v3
+      - name: Cloning repository
+        uses: actions/checkout@v3
 
-    - name: "Installing Composer"
-      uses: php-actions/composer@v6
+      - name: "Installing Composer"
+        uses: php-actions/composer@v6
+
+      - name: Running tests using phpunit
+        uses: php-actions/phpunit@v3
+        env:
+          XDEBUG_MODE: coverage
+        with:
+          version: 9.6.11
+          memory_limit: 4G
+          configuration: "./phpunit.xml"
+          php_extensions: "gd xdebug"
+          coverage_cobertura: "./coverage.cobertura.xml"
+
+      - name: Generate code coverage report
+        uses: irongut/CodeCoverageSummary@v1.3.0
+        with:
+          filename: "./coverage.cobertura.xml"
+          badge: true
+          fail_below_min: true
+          format: markdown
+          hide_complexity: true
+          output: "file"
+          thresholds: "50 75"
+
+      - name: Tests and coverage summary
+        run: |
+          cat code-coverage-results.md >> $GITHUB_STEP_SUMMARY
       
-    - name: Running tests using phpunit
-      uses: php-actions/phpunit@v3
-      env:
-        XDEBUG_MODE: coverage
-      with:
-        version: 9.6.11
-        memory_limit: 4G
-        configuration: "./phpunit.xml"
-        php_extensions: "gd xdebug"
-        coverage_cobertura: "./coverage.cobertura.xml"
+      - name: PHP Code Sniffer
+        uses: php-actions/phpcs@v1
+        with:
+          php_version: 8.1
+          path: src/
+          standard: phpcs.xml
 
-    - name: List files
-      run: ls -la
-
-    - name: Generate code coverage report
-      uses: irongut/CodeCoverageSummary@v1.3.0
-      with:
-        filename: "./coverage.cobertura.xml"
-        badge: true
-        fail_below_min: true
-        format: markdown
-        hide_complexity: true
-        thresholds: "50 75"
-    - name: Adding markdown
-      run: echo '### Hello world! 🚀' >> $GITHUB_STEP_SUMMARY
-
-    - name: PHP Code Sniffer
-      uses: php-actions/phpcs@v1
-      with:
-        php_version: 8.1
-        path: src/
-        standard: phpcs.xml
-
-    - name: PHP Mess Detector
-      uses: php-actions/phpmd@v1
-      with:
-        php_version: 8.1
-        path: src/
-        output: text
-        ruleset: test/phpmd/ruleset.xml
+      - name: PHP Mess Detector
+        uses: php-actions/phpmd@v1
+        with:
+          php_version: 8.1
+          path: src/
+          output: text
+          ruleset: test/phpmd/ruleset.xml
