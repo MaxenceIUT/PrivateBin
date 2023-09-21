@@ -41,3 +41,10 @@ jobs:
         thresholds: "50 75"
     - name: Adding markdown
       run: echo '### Hello world! 🚀' >> $GITHUB_STEP_SUMMARY
+
+    - name: PHP Code Sniffer
+      uses: php-actions/phpcs@v1
+      with:
+        php_version: 8.1
+        path: src/
+        standard: phpcs.xml
