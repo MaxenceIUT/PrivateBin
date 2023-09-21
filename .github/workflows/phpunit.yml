@@ -39,3 +39,5 @@ jobs:
         format: markdown
         hide_complexity: true
         thresholds: "50 75"
+    - name: Adding markdown
+      run: echo '### Hello world! 🚀' >> $GITHUB_STEP_SUMMARY
