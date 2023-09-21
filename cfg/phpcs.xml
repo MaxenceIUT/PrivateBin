@@ -24,7 +24,6 @@
     <rule ref="Generic.Formatting.SpaceAfterCast"/>
     <rule ref="Generic.NamingConventions.ConstructorName"/>
     <rule ref="Generic.PHP.DeprecatedFunctions"/>
-    <rule ref="Generic.Strings.UnnecessaryStringConcat"/>
 
     <!-- Class constants MUST be declared in all upper case with underscore separators. -->
     <rule ref="Generic.NamingConventions.UpperCaseConstantName"/>
