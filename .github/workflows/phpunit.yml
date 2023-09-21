@@ -35,7 +35,7 @@ jobs:
           fail_below_min: true
           format: markdown
           hide_complexity: true
-          output: true
+          output: "file"
           thresholds: "50 75"
 
       - name: List files
