@@ -56,4 +56,14 @@ jobs:
           path: lib/
           output: text
           ruleset: ./cfg/phpmd_ruleset.xml
-          args: "--ignore-violations-on-exit" 
+          args: "--ignore-violations-on-exit"
+      
+      - name: PHPStan Static Analysis
+        uses: php-actions/phpstan@v3
+        with:
+          php_version: 8.1
+          php_extensions: "xdebug gd"
+          path: lib/
+          level: 7
+          memory_limit: 4G
+          args: "--no-progress --no-interaction"
