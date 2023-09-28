@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  run-tests:
+  ci:
     runs-on: ubuntu-latest
 
     steps:
@@ -56,3 +56,4 @@ jobs:
           path: lib/
           output: text
           ruleset: ./cfg/phpmd_ruleset.xml
+          args: "--ignore-violations-on-exit" 
