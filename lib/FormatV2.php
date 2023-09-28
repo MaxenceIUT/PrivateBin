@@ -26,11 +26,11 @@ class FormatV2
      *
      * @access public
      * @static
-     * @param  array $message
+     * @param  array<string> $message
      * @param  bool  $isComment
      * @return bool
      */
-    public static function isValid($message, $isComment = false)
+    public static function isValid(array $message, $isComment = false)
     {
         $required_keys = array('adata', 'v', 'ct');
         if ($isComment) {
@@ -114,7 +114,8 @@ class FormatV2
         }
 
         // Reject data if entropy is too low
-        if (strlen($ct) > strlen(gzdeflate($ct))) {
+        $compressed = gzdeflate($ct);
+        if ($compressed !== false && strlen($ct) > strlen($compressed)) {
             return false;
         }
 
