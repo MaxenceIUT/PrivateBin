@@ -26,7 +26,7 @@ class FormatV2
      *
      * @access public
      * @static
-     * @param  array<string> $message
+     * @param  array<mixed> $message
      * @param  bool  $isComment
      * @return bool
      */
