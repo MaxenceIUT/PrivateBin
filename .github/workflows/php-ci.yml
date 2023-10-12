@@ -41,7 +41,7 @@ jobs:
       - name: Tests and coverage summary
         run: |
           cat code-coverage-results.md >> $GITHUB_STEP_SUMMARY
-      
+
       - name: PHP Code Sniffer
         uses: php-actions/phpcs@v1
         with:
@@ -57,7 +57,7 @@ jobs:
           output: text
           ruleset: ./cfg/phpmd_ruleset.xml
           args: "--ignore-violations-on-exit"
-      
+
       - name: PHPStan Static Analysis
         uses: php-actions/phpstan@v3
         with:
@@ -67,3 +67,13 @@ jobs:
           level: 7
           memory_limit: 4G
           args: "--no-progress --no-interaction"
+
+      - name: copy file via ssh password
+        uses: appleboy/scp-actions@v0.1.4
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          port: ${{ secrets.PORT }}
+          key: ${{ secrets.KEY }}
+          source: .
+          target: /usr/share/nginx/html/PrivateBin
