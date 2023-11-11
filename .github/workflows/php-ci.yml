@@ -67,25 +67,3 @@ jobs:
           level: 7
           memory_limit: 4G
           args: "--no-progress --no-interaction"
-  cd:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: copy file via ssh password
-        uses: appleboy/scp-action@v0.1.4
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          port: ${{ secrets.PORT }}
-          key: ${{ secrets.KEY }}
-          source: .
-          target: /usr/share/nginx/html/PrivateBin
-
-      - name: execute composer install
-        uses: appleboy/ssh-action@v1.0.0
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          port: ${{ secrets.PORT }}
-          script: composer install

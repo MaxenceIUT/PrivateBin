@@ -1,0 +1,40 @@
+name: Deploy on server
+on:
+  workflow_run:
+    workflows: [CI]
+    types:
+      - completed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Copy files to server
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          source: "./*"
+          target: "/usr/share/nginx/html/PrivateBin-latest/"
+
+      - name: Deploy on server
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          script_stop: true
+          # We move the current PrivateBin folder to PrivateBin-backup-<date>, then move the PrivateBin-latest folder back into PrivateBin
+          # If something goes wrong, we can just move the PrivateBin-backup-<date> folder back to PrivateBin
+          script: |
+            cd /usr/share/nginx/html/
+            mv /etc/nginx/conf.d/PrivateBin.conf{,.disabled}
+            mv PrivateBin PrivateBin-backup-$(date +%Y-%m-%d-%H-%M)
+            mv PrivateBin-latest PrivateBin
+            mv /etc/nginx/conf.d/PrivateBin.conf{.disabled,}
