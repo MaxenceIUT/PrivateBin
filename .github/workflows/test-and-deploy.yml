@@ -97,6 +97,6 @@ jobs:
           # If something goes wrong, we can just move the PrivateBin-backup-<date> folder back to PrivateBin
           script: |
             cd /usr/share/nginx/html/
-            cp -r PrivateBin PrivateBin-backup-$(date +%Y-%m-%d-%H-%M)
-            cp -r PrivateBin-latest PrivateBin
-            rm -rf PrivateBin-latest
+            cp -r PrivateBin/ PrivateBin-backup-$(date +%Y-%m-%d-%H-%M)/
+            cp -r PrivateBin-latest/* PrivateBin/
+            rm -rf PrivateBin-latest/
