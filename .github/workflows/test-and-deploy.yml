@@ -83,6 +83,7 @@ jobs:
           port: ${{ secrets.PORT }}
           source: "./*"
           target: "/usr/share/nginx/html/PrivateBin-latest/"
+          timeout: 120s
 
       - name: Deploy on server
         uses: appleboy/ssh-action@v1.0.0
